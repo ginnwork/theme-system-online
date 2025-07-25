@@ -1,0 +1,65 @@
+/**
+ * @import { AppTheme } from './App.jsx'
+ */
+
+export { default as demo } from './demo.json'
+
+export const KEY_THEMES = 'theme-system-web:themes'
+
+/**
+ * @param {string} key Local storage item key to load.
+ * @param {T} [init] Initial value to return if no data is found.
+ * @returns {T}
+ * @template {*} T
+ */
+export function load (key, init) {
+  try {
+    return JSON.parse(window.localStorage.getItem(key)) ?? init
+  } catch (e) {
+    window.alert('Failed to load themes: ' + e.message)
+  }
+}
+
+/**
+ * @returns {Array<AppTheme>}
+ */
+export function loadThemes () {
+  const data = load(KEY_THEMES, [])
+
+  if (Array.isArray(data)) {
+    for (const item of data) item.date = new Date(item.date)
+  }
+
+  return data
+}
+
+/**
+ * @param {Array<AppTheme>} data Themes data to parse.
+ * @returns {Array<AppTheme>}
+ */
+export function parseThemes (data) {
+  if (Array.isArray(data)) {
+    for (const item of data) item.date = new Date(item.date)
+  }
+
+  return data
+}
+
+/**
+ * @param {string} key Local storage key to save to.
+ * @param {*} data Data to save.
+ */
+export function save (key, data) {
+  try {
+    window.localStorage.setItem(key, JSON.stringify(data))
+  } catch (e) {
+    window.alert('Failed to save themes: ' + e.message)
+  }
+}
+
+/**
+ * @param {Array<AppTheme>} themes Themes data to save.
+ */
+export function saveThemes (themes) {
+  save(KEY_THEMES, themes)
+}
