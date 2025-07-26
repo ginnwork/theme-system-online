@@ -135,6 +135,10 @@ export default function App () {
 
   /** @type {RemoveTask} */
   const removeTask = (theme, task) => {
+    const { title } = themes[theme].tasks[task]
+
+    if (!window.confirm(`Are you sure you want to remove the task "${title}"?`)) return
+
     setThemes((themes) => {
       themes[theme].tasks.splice(task, 1)
     })
