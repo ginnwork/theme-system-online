@@ -119,7 +119,7 @@ export default function App () {
       themes.push({
         title: '',
         date: new Date(),
-        days: Array(4).fill(''),
+        days: Array(7).fill(''),
         tasks: []
       })
     })
