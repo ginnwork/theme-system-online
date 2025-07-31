@@ -1,7 +1,7 @@
 import { createContext, createEffect, For, useContext } from 'solid-js'
 
 import Theme from './Theme.jsx'
-import { nextFill } from './Dot.jsx'
+import { nextStatus } from './Day.jsx'
 import { createStoreProducer } from './utils.jsx'
 import { demo, loadThemes, parseThemes, saveThemes } from './data.jsx'
 
@@ -171,7 +171,7 @@ export default function App () {
   const updateDay = (theme, task, day) => {
     setThemes((themes) => {
       const days = themes[theme].tasks[task].days
-      days[day] = nextFill(days[day])
+      days[day] = nextStatus(days[day])
     })
   }
 

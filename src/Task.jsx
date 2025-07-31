@@ -1,6 +1,6 @@
 import { createContext, For, useContext } from 'solid-js'
 
-import Dot from './Dot.jsx'
+import Day from './Day.jsx'
 import { useApp } from './App.jsx'
 import { useTheme } from './Theme.jsx'
 
@@ -47,7 +47,7 @@ export default function Task (props) {
 
       <For each={days()}>
         {(status, index) => (
-          <Dot index={index()} status={status} />
+          <Day index={index()} status={status} />
         )}
       </For>
 

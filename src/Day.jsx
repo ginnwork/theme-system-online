@@ -7,13 +7,13 @@ import { useTheme } from './Theme.jsx'
  */
 
 /**
- * @typedef {Object} DotProps
+ * @typedef {Object} DayProps
  * @property {number} index The index of the day in the task's days array.
- * @property {DotStatus} status The fill state of the dot (0: blank, 1: upper, 2: lower, 3: checked).
+ * @property {DayStatus} status The fill state of the day (0: blank, 1: upper, 2: lower, 3: checked).
  */
 
 /**
- * @typedef {typeof STATUS_BLANK|typeof STATUS_UPPER|typeof STATUS_LOWER|typeof STATUS_CHECKED} DotStatus
+ * @typedef {typeof STATUS_BLANK|typeof STATUS_UPPER|typeof STATUS_LOWER|typeof STATUS_CHECKED} DayStatus
  */
 
 export const STATUS_BLANK = 0
@@ -22,18 +22,18 @@ export const STATUS_UPPER = 2
 export const STATUS_CHECKED = 3
 
 /**
- * @param {number} fill The current fill state of the dot.
+ * @param {number} status The current status of the day.
  * @returns {number}
  */
-export function nextFill (fill) {
-  return fill + 1 > STATUS_CHECKED ? STATUS_BLANK : fill + 1
+export function nextStatus (status) {
+  return status + 1 > STATUS_CHECKED ? STATUS_BLANK : status + 1
 }
 
 /**
- * @param {DotProps} props
+ * @param {DayProps} props
  * @returns {JSXElement}
  */
-export default function Dot (props) {
+export default function Day (props) {
   const [, { updateDay }] = useApp()
   const [theme] = useTheme()
   const [task] = useTask()
