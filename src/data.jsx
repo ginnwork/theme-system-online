@@ -2,7 +2,7 @@
  * @import { AppTheme } from './App.jsx'
  */
 
-export const KEY_THEMES = 'theme-system-web:themes'
+export const KEY_THEMES = 'theme-system:themes'
 
 /**
  * @param {string} key Local storage item key to load.
