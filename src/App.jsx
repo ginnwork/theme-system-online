@@ -1,9 +1,10 @@
 import { createContext, createEffect, For, useContext } from 'solid-js'
 
+import demo from './demo.json'
 import Theme from './Theme.jsx'
 import { nextStatus } from './Day.jsx'
 import { createStoreProducer } from './utils.jsx'
-import { demo, loadThemes, parseThemes, saveThemes } from './data.jsx'
+import { loadThemes, parseThemes, saveThemes } from './data.jsx'
 
 /**
  * @import { JSXElement } from 'solid-js'

@@ -2,8 +2,6 @@
  * @import { AppTheme } from './App.jsx'
  */
 
-export { default as demo } from './demo.json'
-
 export const KEY_THEMES = 'theme-system-web:themes'
 
 /**
