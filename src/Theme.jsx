@@ -28,12 +28,13 @@ export default function Theme (props) {
   const [, { addDay, addTask, removeDay, removeTheme, updateLabel, updateTheme }] = useApp()
 
   /**
-   * @param {number} [offset=0] Offset to get the letter for the day of the week.
+   * @param {number} index The index of the day in the theme's days array.
    * @returns {string}
    */
-  const letter = (offset = 0) => {
+  const letter = (index) => {
+    if (!props.date) return ''
     const date = new Date(props.date)
-    if (offset) date.setDate(date.getDate() + offset)
+    if (index) date.setDate(date.getDate() + index)
     return date.toLocaleDateString('en-us', { weekday: 'narrow' })
   }
 
@@ -42,7 +43,9 @@ export default function Theme (props) {
    * @returns {void}
    */
   const onInputDate = (event) => {
-    updateTheme(props.index, 'date', new Date(event.currentTarget.value))
+    const value = event.currentTarget.value
+    const date = value ? new Date(value) : null
+    updateTheme(props.index, 'date', date)
   }
 
   /**
@@ -90,7 +93,7 @@ export default function Theme (props) {
           <input
             class='absolute bottom-0 right-0 bg-white text-gray-400'
             type='date'
-            value={props.date.toLocaleDateString()}
+            value={props.date?.toLocaleDateString() ?? ''}
             onInput={onInputDate}
           />
         </div>

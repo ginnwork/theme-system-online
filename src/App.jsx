@@ -43,7 +43,7 @@ import { demo, loadThemes, parseThemes, saveThemes } from './data.jsx'
 /**
  * @typedef {Object} AppTheme
  * @property {string} title The title of the theme.
- * @property {Date} date The date of the theme in ISO format.
+ * @property {Date} [date] The date of the theme in ISO format.
  * @property {Array<string>} days An array of labels for the days of the week.
  * @property {Array<ThemeTask>} tasks An array of tasks associated with the theme.
  */
@@ -118,7 +118,7 @@ export default function App () {
     setThemes((themes) => {
       themes.push({
         title: '',
-        date: new Date(),
+        date: null,
         days: Array(7).fill(''),
         tasks: []
       })
