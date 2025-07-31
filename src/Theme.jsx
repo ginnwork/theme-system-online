@@ -1,6 +1,6 @@
 /* @refresh reload */
 /* eslint-env browser */
-import { createContext, For, Index, useContext } from 'solid-js'
+import { createContext, For, Index, Show, useContext } from 'solid-js'
 
 import Task from './Task.jsx'
 import { useApp } from './App.jsx'
@@ -53,6 +53,17 @@ export default function Theme (props) {
     : 'border-gray-400'
 
   /**
+   * @param {number} index The index of the day in the theme's days array.
+   * @returns {string}
+   */
+  const digit = (index) => {
+    if (!props.date) return ''
+    const date = new Date(props.date)
+    if (index) date.setDate(date.getDate() + index)
+    return date.getDate().toString()
+  }
+
+  /**
    * @param {number} index Offset to get the letter for the day of the week.
    * @returns {string}
    */
@@ -79,7 +90,20 @@ export default function Theme (props) {
    * @returns {void}
    */
   const onInputLabel = (day, event) => {
-    updateLabel(props.index, day, event.currentTarget.value)
+    const value = event.currentTarget.value
+    const prop = props.days[day].split('\n')[1] ?? ''
+    updateLabel(props.index, day, value + '\n' + prop)
+  }
+
+  /**
+   * @param {number} day The index of the day in the theme's days array.
+   * @param {InputEvent & { currentTarget: HTMLInputElement }} event The input event for the update.
+   * @returns {void}
+   */
+  const onInputDigit = (day, event) => {
+    const value = event.currentTarget.value
+    const prop = props.days[day].split('\n')[0] ?? ''
+    updateLabel(props.index, day, prop + '\n' + value)
   }
 
   /**
@@ -138,15 +162,36 @@ export default function Theme (props) {
               onPointerOver={[onOverDay, index]}
               onPointerOut={hoverReset}
             >
-              <div class={`text-center ${bg(index)}`}>
-                {letter(index)}
-              </div>
-              <input
-                class='text-center w-8'
-                type='text'
-                value={day()}
-                onInput={[onInputLabel, index]}
-              />
+              <Show
+                when={props.date}
+                fallback={(
+                  <>
+                    <input
+                      class={`text-center w-8 ${bg(index)}`}
+                      type='text'
+                      value={day().split('\n')[0] ?? ''}
+                      onInput={[onInputLabel, index]}
+                    />
+
+                    <br />
+
+                    <input
+                      class='text-center w-8'
+                      type='text'
+                      value={day().split('\n')[1] ?? ''}
+                      onInput={[onInputDigit, index]}
+                    />
+                  </>
+                )}
+              >
+                <div class={`text-center ${bg(index)}`}>
+                  {letter(index)}
+                </div>
+
+                <div class='text-center w-8'>
+                  {digit(index)}
+                </div>
+              </Show>
             </div>
           )}
         </Index>
