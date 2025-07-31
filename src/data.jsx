@@ -24,13 +24,7 @@ export function load (key, init) {
  * @returns {Array<AppTheme>}
  */
 export function loadThemes () {
-  const data = load(KEY_THEMES, [])
-
-  if (Array.isArray(data)) {
-    for (const item of data) item.date = new Date(item.date)
-  }
-
-  return data
+  return parseThemes(load(KEY_THEMES, []))
 }
 
 /**
@@ -38,8 +32,8 @@ export function loadThemes () {
  * @returns {Array<AppTheme>}
  */
 export function parseThemes (data) {
-  if (Array.isArray(data)) {
-    for (const item of data) item.date = new Date(item.date)
+  for (const item of data) {
+    if (item.date) item.date = new Date(item.date)
   }
 
   return data
