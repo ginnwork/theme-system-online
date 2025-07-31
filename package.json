@@ -1,7 +1,7 @@
 {
-  "name": "theme-system-web",
-  "version": "1.0.0",
-  "description": "",
+  "name": "theme-system-online",
+  "version": "1.1.0",
+  "description": "A web application for managing themes and tasks inspired by CGP Grey's Theme System.",
   "type": "module",
   "scripts": {
     "start": "vite",
