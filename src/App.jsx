@@ -26,6 +26,8 @@ import { demo, loadThemes, parseThemes, saveThemes } from './data.jsx'
  * @property {AddDay} addDay Function to add a new day to a theme.
  * @property {AddTask} addTask Function to add a new task to a theme.
  * @property {AddTheme} addTheme Function to add a new theme.
+ * @property {HoverDay} hoverDay Function to set the current hovered day in the app state.
+ * @property {HoverReset} hoverReset Function to reset the hovered day in the app state.
  * @property {RemoveDay} removeDay Function to remove a day from a theme.
  * @property {RemoveTask} removeTask Function to remove a task from a theme.
  * @property {RemoveTheme} removeTheme Function to remove a theme.
@@ -37,7 +39,10 @@ import { demo, loadThemes, parseThemes, saveThemes } from './data.jsx'
 
 /**
  * @typedef {Object} AppContextState
+ * @property {number} day The index of the currently hovered day.
  * @property {boolean} demo Toggle to show demo data.
+ * @property {number} task The index of the currently hovered task.
+ * @property {number} theme The index of the currently hovered theme.
  */
 
 /**
@@ -46,6 +51,14 @@ import { demo, loadThemes, parseThemes, saveThemes } from './data.jsx'
  * @property {Date} [date] The date of the theme in ISO format.
  * @property {Array<string>} days An array of labels for the days of the week.
  * @property {Array<ThemeTask>} tasks An array of tasks associated with the theme.
+ */
+
+/**
+ * @typedef {(theme: number, task: number, day: number) => void} HoverDay
+ */
+
+/**
+ * @typedef {() => void} HoverReset
  */
 
 /**
@@ -92,7 +105,12 @@ const AppContext = createContext()
  * @returns {JSXElement}
  */
 export default function App () {
-  const [app, setApp] = createStoreProducer({ demo: false })
+  const [app, setApp] = createStoreProducer({
+    day: -1,
+    demo: false,
+    task: -1,
+    theme: -1
+  })
   const [themes, setThemes] = createStoreProducer(loadThemes())
 
   /** @type {AddDay} */
@@ -122,6 +140,24 @@ export default function App () {
         days: Array(7).fill(''),
         tasks: []
       })
+    })
+  }
+
+  /** @type {HoverDay} */
+  const hoverDay = (theme, task, day) => {
+    setApp((app) => {
+      app.theme = theme
+      app.task = task
+      app.day = day
+    })
+  }
+
+  /** @type {HoverReset} */
+  const hoverReset = () => {
+    setApp((app) => {
+      app.theme = -1
+      app.task = -1
+      app.day = -1
     })
   }
 
@@ -200,10 +236,11 @@ export default function App () {
     addDay,
     addTask,
     addTheme,
+    hoverDay,
+    hoverReset,
     removeDay,
     removeTask,
     removeTheme,
-    toggleDemo,
     updateDay,
     updateLabel,
     updateTask,

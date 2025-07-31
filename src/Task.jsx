@@ -20,7 +20,7 @@ const TaskContext = createContext()
  * @returns {JSXElement}
  */
 export default function Task (props) {
-  const [, { removeTask, updateTask }] = useApp()
+  const [app, { hoverDay, hoverReset, removeTask, updateTask }] = useApp()
   const [theme] = useTheme()
 
   /**
@@ -29,6 +29,20 @@ export default function Task (props) {
   const days = () => theme.days.length < props.days.length
     ? props.days.slice(0, theme.days.length)
     : props.days.concat(new Array(theme.days.length - props.days.length).fill(0))
+
+  /**
+   * @returns {string}
+   */
+  const style = () => app.theme === theme.index && app.task === props.index
+    ? 'text-blue-500 border-blue-500'
+    : 'border-gray-500'
+
+  /**
+   * @returns {void}
+   */
+  const onOverTask = () => {
+    hoverDay(theme.index, props.index, -1)
+  }
 
   /**
    * @param {InputEvent & { currentTarget: HTMLInputElement }} event The input event for the update.
@@ -47,7 +61,13 @@ export default function Task (props) {
 
   return (
     <TaskContext.Provider value={[props]}>
-      <input class='border border-black/33 px-2' value={props.title} onInput={onInputTitle} />
+      <input
+        class={`border px-2 ${style()}`}
+        value={props.title}
+        onInput={onInputTitle}
+        onPointerOver={onOverTask}
+        onPointerOut={hoverReset}
+      />
 
       <For each={days()}>
         {(status, index) => (
@@ -56,8 +76,10 @@ export default function Task (props) {
       </For>
 
       <button
-        class='border border-black/33 cursor-pointer text-center hover:bg-black/11 transition duration-300'
+        class={`border cursor-pointer text-center ${style()}`}
         onClick={onRemoveTask}
+        onPointerOver={onOverTask}
+        onPointerOut={hoverReset}
       >
         -
       </button>

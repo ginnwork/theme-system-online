@@ -25,10 +25,35 @@ const ThemeContext = createContext()
  * @returns {JSXElement}
  */
 export default function Theme (props) {
-  const [, { addDay, addTask, removeDay, removeTheme, updateLabel, updateTheme }] = useApp()
+  const [app, {
+    addDay,
+    addTask,
+    hoverDay,
+    hoverReset,
+    removeDay,
+    removeTheme,
+    updateLabel,
+    updateTheme
+  }] = useApp()
 
   /**
    * @param {number} index The index of the day in the theme's days array.
+   * @returns {string}
+   */
+  const bg = (index) => app.theme === props.index && app.day === index
+    ? 'bg-blue-100'
+    : 'bg-gray-200'
+
+  /**
+   * @param {number} index The index of the day in the theme's days array.
+   * @returns {string}
+   */
+  const color = (index) => app.theme === props.index && app.day === index
+    ? 'border-blue-500 text-blue-500'
+    : 'border-gray-400'
+
+  /**
+   * @param {number} index Offset to get the letter for the day of the week.
    * @returns {string}
    */
   const letter = (index) => {
@@ -49,6 +74,15 @@ export default function Theme (props) {
   }
 
   /**
+   * @param {number} day The index of the day in the theme's days array.
+   * @param {InputEvent & { currentTarget: HTMLInputElement }} event The input event for the update.
+   * @returns {void}
+   */
+  const onInputLabel = (day, event) => {
+    updateLabel(props.index, day, event.currentTarget.value)
+  }
+
+  /**
    * @param {InputEvent & { currentTarget: HTMLInputElement }} event The input event for the update.
    * @returns {void}
    */
@@ -57,12 +91,11 @@ export default function Theme (props) {
   }
 
   /**
-   * @param {number} day The index of the day in the theme's days array.
-   * @param {InputEvent & { currentTarget: HTMLInputElement }} event The input event for the update.
+   * @param {number} index The index of the day in the theme's days array.
    * @returns {void}
    */
-  const onInputLabel = (day, event) => {
-    updateLabel(props.index, day, event.currentTarget.value)
+  const onOverDay = (index) => {
+    hoverDay(props.index, -1, index)
   }
 
   /**
@@ -76,9 +109,9 @@ export default function Theme (props) {
   return (
     <ThemeContext.Provider value={[props]}>
       <div
-        class='m-4 p-4 border border-gray-400 grid gap-3 --border-'
+        class='m-4 p-4 border border-gray-400 grid gap-3'
         style={{
-          'grid-template-columns': `minmax(50%,1fr) repeat(${props.days.length + 1}, max-content)`
+          'grid-template-columns': `1fr repeat(${props.days.length + 1}, max-content)`
         }}
       >
         <div class='relative'>
@@ -100,8 +133,14 @@ export default function Theme (props) {
 
         <Index each={props.days}>
           {(day, index) => (
-            <div class='border border-gray-400'>
-              <div class='bg-gray-200 text-center'>{letter(index)}</div>
+            <div
+              class={`border ${color(index)}`}
+              onPointerOver={[onOverDay, index]}
+              onPointerOut={hoverReset}
+            >
+              <div class={`text-center ${bg(index)}`}>
+                {letter(index)}
+              </div>
               <input
                 class='text-center w-8'
                 type='text'
@@ -135,8 +174,10 @@ export default function Theme (props) {
         <Index each={props.days}>
           {(_, index) => (
             <button
-              class='border border-gray-400 cursor-pointer hover:bg-black/11 transition duration-300 text-center'
+              class={`border cursor-pointer text-center ${color(index)}`}
               onClick={[onRemoveDay, index]}
+              onPointerOver={[onOverDay, index]}
+              onPointerOut={hoverReset}
             >
               -
             </button>
