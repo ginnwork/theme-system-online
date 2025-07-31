@@ -32,11 +32,15 @@ export default function Task (props) {
 
   /**
    * @param {InputEvent & { currentTarget: HTMLInputElement }} event The input event for the update.
+   * @returns {void}
    */
   const onInputTitle = (event) => {
     updateTask(theme.index, props.index, 'title', event.currentTarget.value)
   }
 
+  /**
+   * @returns {void}
+   */
   const onRemoveTask = () => {
     removeTask(theme.index, props.index)
   }

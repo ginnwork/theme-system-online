@@ -48,6 +48,9 @@ export default function Day (props) {
    */
   const bottom = () => props.status === STATUS_LOWER || props.status === STATUS_CHECKED ? 'bg-black' : ''
 
+  /**
+   * @returns {void}
+   */
   const onClickDay = () => {
     updateDay(theme.index, task.index, props.index)
   }

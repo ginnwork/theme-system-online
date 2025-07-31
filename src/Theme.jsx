@@ -39,6 +39,7 @@ export default function Theme (props) {
 
   /**
    * @param {InputEvent & { currentTarget: HTMLInputElement }} event The input event for the update.
+   * @returns {void}
    */
   const onInputDate = (event) => {
     updateTheme(props.index, 'date', new Date(event.currentTarget.value))
@@ -46,6 +47,7 @@ export default function Theme (props) {
 
   /**
    * @param {InputEvent & { currentTarget: HTMLInputElement }} event The input event for the update.
+   * @returns {void}
    */
   const onInputTitle = (event) => {
     updateTheme(props.index, 'title', event.currentTarget.value)
@@ -54,6 +56,7 @@ export default function Theme (props) {
   /**
    * @param {number} day The index of the day in the theme's days array.
    * @param {InputEvent & { currentTarget: HTMLInputElement }} event The input event for the update.
+   * @returns {void}
    */
   const onInputLabel = (day, event) => {
     updateLabel(props.index, day, event.currentTarget.value)
@@ -61,6 +64,7 @@ export default function Theme (props) {
 
   /**
    * @param {number} day The index of the day in the theme's days array.
+   * @returns {void}
    */
   const onRemoveDay = (day) => {
     removeDay(props.index, day)

@@ -48,6 +48,7 @@ export function parseThemes (data) {
 /**
  * @param {string} key Local storage key to save to.
  * @param {*} data Data to save.
+ * @returns {void}
  */
 export function save (key, data) {
   try {
@@ -59,6 +60,7 @@ export function save (key, data) {
 
 /**
  * @param {Array<AppTheme>} themes Themes data to save.
+ * @returns {void}
  */
 export function saveThemes (themes) {
   save(KEY_THEMES, themes)
