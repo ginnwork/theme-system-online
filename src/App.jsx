@@ -135,10 +135,12 @@ export default function App () {
   /** @type {AddTheme} */
   const addTheme = () => {
     setThemes((themes) => {
+      const n = themes.at(-1)?.days.length
+
       themes.push({
         title: '',
         date: null,
-        days: Array(7).fill(''),
+        days: Array(n ?? 7).fill(''),
         tasks: []
       })
     })
@@ -184,9 +186,9 @@ export default function App () {
   /** @type {RemoveTheme} */
   const removeTheme = (theme) => {
     const { date, title } = themes[theme]
-    const str = date.toLocaleDateString()
+    const dated = date.toLocaleDateString()
 
-    if (!window.confirm(`Are you sure you want to remove the theme "${title}" for ${str}?`)) return
+    if (!window.confirm(`Are you sure you want to remove the theme "${title}" for ${dated}?`)) return
 
     setThemes((themes) => {
       themes.splice(theme, 1)
