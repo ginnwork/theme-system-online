@@ -275,7 +275,7 @@ export default function App () {
           title='This Journal Keeps Me Productive (& Maybe You Too)'
           href='https://www.youtube.com/watch?v=fSwpe8r50_o'
         >
-          YouTube
+          How To Use
         </a>
 
         /
@@ -285,7 +285,7 @@ export default function App () {
           title='“The Theme System Journal” graphic journal by Cortex Brand. | Cotton Bureau'
           href='https://cottonbureau.com/p/TZ4WZJ/journal/the-theme-system-journal'
         >
-          Journal
+          Physical Version
         </a>
       </h1>
 
